@@ -1,0 +1,26 @@
+{% extends "ecommerce/base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+<script src="{% static 'mainapp/jquery-1.11.2.js' %}"></script>
+<script src="{% static 'mainapp/ajax.js' %}"></script>
+
+<span class='info'>&#8658; You must be logged in to view this page.</span>
+<br>
+<br>
+<div class='main'>
+   <h3>Please enter your details to sign up</h3>
+   <form method='POST' action="{% url 'ecommerce:register' %}">
+   	{% csrf_token %}
+      <span class='fieldname'>Username</span>
+      <input type='text' maxlength='16' id='regusername' name='username'>
+         <span id='info'></span>
+         <br>
+         <span class='fieldname'>Password</span>
+         <input type='text' maxlength='16' name='password'><br>
+         <span class='fieldname'>&nbsp;</span>
+      <input type='submit' value='Sign up'>
+   </form>
+</div>
+{% endblock %}
