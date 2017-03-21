@@ -24,8 +24,14 @@ def signup(request):
 	
 def register(request):
     u = request.POST['username']
+    e = request.POST['email']
     p = request.POST['password']
-    user = Member(username=u, password=p)
+    ph = request.POST['phone']
+    hn = request.POST['house']
+    a1 = request.POST['address1']
+    a2 = request.POST['address2']
+    pc = request.POST['postcode']
+    user = Member(username=u, email=e, password=p, phone=ph, house=hn, address1=a1, address2=a2, postcode=pc)
     user.save()
     context = {
         'appname': appname,

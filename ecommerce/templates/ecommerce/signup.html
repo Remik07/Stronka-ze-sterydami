@@ -5,22 +5,35 @@
 {% block content %}
 <script src="{% static 'mainapp/jquery-1.11.2.js' %}"></script>
 <script src="{% static 'mainapp/ajax.js' %}"></script>
+<!-- Custom styles for this template -->
+    <link href="{% static "ecommerce/signin.css" %}" rel="stylesheet">
 
-<span class='info'>&#8658; You must be logged in to view this page.</span>
-<br>
-<br>
-<div class='main'>
-   <h3>Please enter your details to sign up</h3>
+<div class="all-elements">
+   
    <form method='POST' action="{% url 'ecommerce:register' %}">
-   	{% csrf_token %}
-      <span class='fieldname'>Username</span>
-      <input type='text' maxlength='16' id='regusername' name='username'>
-         <span id='info'></span>
-         <br>
-         <span class='fieldname'>Password</span>
-         <input type='text' maxlength='16' name='password'><br>
-         <span class='fieldname'>&nbsp;</span>
-      <input type='submit' value='Sign up'>
-   </form>
+		{% csrf_token %}
+		<h2 class="form-signin-heading">Please log in</h2>
+		<label for="inputUsername" class="sr-only">Username</label>
+		<input type="text" id="inputUsername" class="form-control" maxlength='16' name='username' placeholder="Username" required autofocus>
+		<label for="inputEmail" class="sr-only">Email</label>
+		<input type="text" id="inputEmail" class="form-control" maxlength='16' name='email' placeholder="Email address" required autofocus>
+		<label for="inputPassword" class="sr-only">Password</label>
+		<input type="password" id="inputPassword" class="form-control" name='password' placeholder="Password" required>
+		<label for="inputPassword" class="sr-only">Password</label>
+		<input type="password" id="inputPassword" class="form-control" name='password_confirm' placeholder="Password" required>
+		<label for="inputPhone" class="sr-only">Phone Number</label>
+		<input type="number" id="inputPhone" class="form-control" maxlength='16' name='phone' placeholder="Phone Number" required autofocus>
+		<label for="inputHouse" class="sr-only">House name/number</label>
+		<input type="text" id="inputHouse" class="form-control" maxlength='16' name='house' placeholder="House name/number" required autofocus>
+		<label for="inputAddress1" class="sr-only">Address line 1</label>
+		<input type="text" id="inputAddress1" class="form-control" maxlength='16' name='address1' placeholder="Address line 1" required autofocus>
+		<label for="inputAddress2" class="sr-only">Address Line 2</label>
+		<input type="text" id="inputAddress2" class="form-control" maxlength='16' name='address2' placeholder="Address line 2" autofocus>
+		<label for="inputPostcode" class="sr-only">Post Code</label>
+		<input type="text" id="inputPostcode" class="form-control" maxlength='16' name='postcode' placeholder="Post Code" required autofocus>		
+		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    </form>
+   
+   
 </div>
 {% endblock %}
