@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from django import template
 from django.http import Http404
 from django.http import HttpResponse
@@ -101,15 +101,21 @@ def basket(request):
 		'username' : u}
     )
 
-@loggedin		
+
 def addbasket(request):
+
     u = request.session['username']
+
     productid = request.POST['stuffNum']
+    productname = request.POST['stuffName']
+    productpri = request.POST['stuffPri']
+    productdesc = request.POST['stuffDesc']
+	
 	# make new Record object to store all values and save it
-    queryObject = Basket(StuffID = productid)
+    queryObject = Basket(StuffID_id = productid)
     queryObject.save()
 	
-    return render(request, 'ecommerce/index.html', {
+    return render(request, 'ecommerce/added.html', {
         'appname': appname,
 		'loggedin': True,
 		'username' : u}

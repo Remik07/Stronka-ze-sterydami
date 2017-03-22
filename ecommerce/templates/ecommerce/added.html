@@ -1,0 +1,10 @@
+{% extends "ecommerce/base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+<!-- Custom styles for this template -->
+    <link href="{% static "ecommerce/signin.css" %}" rel="stylesheet">
+	<center>You have added an item to your basket successfull</center>
+	<center><a href="{% url 'ecommerce:shop' %}">Please click here to continue</a></center>
+{% endblock %}

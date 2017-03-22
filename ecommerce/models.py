@@ -19,5 +19,5 @@ class Product(models.Model):
     Description = models.CharField(max_length=16)
 	
 class Basket(models.Model):
-    StuffID = models.ForeignKey(Product)
+    StuffID_id = models.IntegerField(max_length=16)
 
