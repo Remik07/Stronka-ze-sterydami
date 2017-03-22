@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^login/$', views.login, name='login'),
     # basket page
     url(r'^basket/$', views.basket, name='basket'),
-	# basket page
-    url(r'^logout/$', views.logout, name='logout')
+	# logout page
+    url(r'^logout/$', views.logout, name='logout'),
+	# addbasket page
+    url(r'^addbasket/$', views.addbasket, name='addbasket')
 ]

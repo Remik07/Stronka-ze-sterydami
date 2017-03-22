@@ -20,13 +20,15 @@ def loggedin(f):
     return test
 
 def index(request):
+    counter = 0
     # get all stored Record objects
     oldProducts = Product.objects.all()
 
     # make dictionary of old queries
     context = {
         'appname': appname,
-        'oldProducts' : oldProducts
+        'oldProducts' : oldProducts,
+		'counter' : counter
     }
     return render(request, 'ecommerce/index.html', context)
 
@@ -88,8 +90,26 @@ def login(request):
 
 @loggedin		
 def basket(request):
+    # get all stored Record objects
+    allProductsInBasket = Basket.objects.all()
+	
     u = request.session['username']
     return render(request, 'ecommerce/basket.html', {
+        'appname': appname,
+		'loggedin': True,
+        'allProductsInBasket' : allProductsInBasket,
+		'username' : u}
+    )
+
+@loggedin		
+def addbasket(request):
+    u = request.session['username']
+    productid = request.POST['stuffNum']
+	# make new Record object to store all values and save it
+    queryObject = Basket(StuffID = productid)
+    queryObject.save()
+	
+    return render(request, 'ecommerce/index.html', {
         'appname': appname,
 		'loggedin': True,
 		'username' : u}
