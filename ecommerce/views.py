@@ -1,19 +1,44 @@
+from django.shortcuts import get_object_or_404, render
 from django import template
 from django.http import Http404
 from django.http import HttpResponse
-from django.template import loader
-from django.shortcuts import get_object_or_404, render
+from django.template import loader, RequestContext
 
-from .models import Member, Records
+from .models import Member, Product, Basket
 import math
 
 # Create your views here.
 
 appname = 'Ecommerce Website'
 
+def loggedin(f):
+    def test(request):
+        if 'username' in request.session:
+            return f(request)
+        else:
+            return render(request, 'ecommerce/not-logged-in.html', {})
+    return test
+
 def index(request):
+    # get all stored Record objects
+    oldProducts = Product.objects.all()
+
+    # make dictionary of old queries
     context = {
         'appname': appname,
+        'oldProducts' : oldProducts
+    }
+    return render(request, 'ecommerce/index.html', context)
+
+def shop(request):
+    # get all stored Record objects
+    oldProducts = Product.objects.all()
+    u = request.session['username']
+    context = {
+        'appname': appname,
+		'loggedin': True,
+		'username' : u,
+        'oldProducts' : oldProducts
     }
     return render(request, 'ecommerce/index.html', context)
 
@@ -60,3 +85,25 @@ def login(request):
             )
         else:
             return HttpResponse("Wrong password") 
+
+@loggedin		
+def basket(request):
+    u = request.session['username']
+    return render(request, 'ecommerce/basket.html', {
+        'appname': appname,
+		'loggedin': True,
+		'username' : u}
+    )
+	
+@loggedin
+def logout(request):
+    if 'username' in request.session:
+        u = request.session['username']
+        request.session.flush()        
+        context = {
+            'appname': appname,
+            'username': u
+        }
+        return render(request, 'ecommerce/logout.html', context)
+    else:
+        raise Http404("Can't logout, you are not logged in")

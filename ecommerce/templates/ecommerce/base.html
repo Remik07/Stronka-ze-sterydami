@@ -43,19 +43,30 @@
             <div id="navbar" class="navbar-collapse collapse">
 			  {% if loggedin %}
               <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
-                <li><a href='/members/'>Members</a></li>
+                <li><a href="{% url 'ecommerce:shop' %}">Home</a></li>
                 <li><a href='/friends/'>Friends</a></li>
 				<li><a href='/messages/'>Messages</a></li>
 				<li><a href='/profile/'>Edit Profile</a></li>
-				<li><a href="#contact">Contact</a></li>				
+				<li><a href="{% url 'ecommerce:logout' %}">LogOut</a></li>
+				<li><a href="#contact">Contact</a></li>						
 				{% else %}
 				<ul class="nav navbar-nav">
                 <li><a href="{% url 'ecommerce:index' %}">Home</a></li>
                 <li><a href="{% url 'ecommerce:signup' %}">Sign up</a></li>
                 <li><a href="{% url 'ecommerce:login' %}">Log in</a></li>
 				{% endif %}
-              </ul>		  
+              </ul>
+			  
+			{% if loggedin %}
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="{% url 'ecommerce:basket' %}">Basket</a></li>
+				<li class="navbar-brand" style="color: rgb(0,255,0); font-size: 1.0em;">Hey {{ username }}</li>
+			</ul>
+			{% else %}
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="{% url 'ecommerce:basket' %}">Basket</a></li>
+			</ul>
+			{% endif %}
             </div>
           </div>
         </nav>

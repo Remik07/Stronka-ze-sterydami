@@ -12,9 +12,12 @@ class Member(models.Model):
     postcode = models.CharField(max_length=16)
 	
 	
-class Records(models.Model):
-    capital = models.FloatField(max_length=200)
-    years = models.FloatField(max_length=200)
-    rate = models.FloatField(max_length=200)
-    amount = models.FloatField(max_length=200)
+class Product(models.Model):
+    ProductID = models.IntegerField(max_length=16,primary_key=True)
+    Name = models.CharField(max_length=16)
+    Price = models.CharField(max_length=16)
+    Description = models.CharField(max_length=16)
+	
+class Basket(models.Model):
+    StuffID = models.ForeignKey(Product)
 
