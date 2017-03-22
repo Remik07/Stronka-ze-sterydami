@@ -22,12 +22,12 @@
 								<div class="row">
 									<div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/></div>
 									<div class="col-sm-10">
-										<h4 class="nomargin">{{ Basket.StuffID_id }}</h4>
-										<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+										<h4 class="nomargin">{{ Basket.sName }}</h4>
+										<p>{{ Basket.sDescription }}</p>
 									</div>
 								</div>
 							</td>
-							<td data-th="Price">$1.99</td>
+							<td data-th="Price">${{ Basket.sPrice }}</td>
 							<td class="actions" data-th="">
 								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
 							</td>

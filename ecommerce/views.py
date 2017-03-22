@@ -112,7 +112,7 @@ def addbasket(request):
     productdesc = request.POST['stuffDesc']
 	
 	# make new Record object to store all values and save it
-    queryObject = Basket(StuffID_id = productid)
+    queryObject = Basket(StuffID = productid, sName = productname, sPrice = productpri, sDescription = productdesc)
     queryObject.save()
 	
     return render(request, 'ecommerce/added.html', {
