@@ -15,7 +15,7 @@
 		<div class="row">
 		{% for Product in oldProducts %}
         <div class="col-lg-4">
-          <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
+          <img class="img-circle" src="/static/ecommerce/{{ Product.Image }}" alt="Generic placeholder image" width="140" height="140">
           <h2>{{ Product.Name }}</h2>
           <p>{{ Product.Price }} </br> {{ Product.Description }}</p>
 		  <form method='POST' action="{% url 'ecommerce:addbasket' %}">
