@@ -19,5 +19,7 @@ urlpatterns = [
 	# logout page
     url(r'^logout/$', views.logout, name='logout'),
 	# addbasket page
-    url(r'^addbasket/$', views.addbasket, name='addbasket')
+    url(r'^addbasket/$', views.addbasket, name='addbasket'),
+	# removefrombasket page
+    url(r'^removefrombasket/$', views.removefrombasket, name='removefrombasket')
 ]

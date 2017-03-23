@@ -4,7 +4,7 @@ from django.http import Http404
 from django.http import HttpResponse
 from django.template import loader, RequestContext
 
-from .models import Member, Product, Basket
+from .models import Product, User, Address, Order
 import math
 
 # Create your views here.
@@ -50,21 +50,28 @@ def signup(request):
     return render(request, 'ecommerce/signup.html', context)
 	
 def register(request):
-    u = request.POST['username']
-    e = request.POST['email']
-    p = request.POST['password']
-    ph = request.POST['phone']
-    hn = request.POST['house']
-    a1 = request.POST['address1']
-    a2 = request.POST['address2']
-    pc = request.POST['postcode']
-    user = Member(username=u, email=e, password=p, phone=ph, house=hn, address1=a1, address2=a2, postcode=pc)
-    user.save()
-    context = {
-        'appname': appname,
-        'username' : u
-    }
-    return render(request, 'ecommerce/user-registered.html', context)
+	u = request.POST['username']
+	e = request.POST['email']
+	p = request.POST['password']
+	ph = request.POST['phone']
+	a1 = request.POST['address1']
+	a2 = request.POST['address2']
+	pc = request.POST['postcode']
+	fn = request.POST['firstname']
+	ln = request.POST['lastname']
+	ci = request.POST['city']
+	co = request.POST['country']
+
+	user = User(username=u, email=e, password=p, phonenumber=ph, firstname=fn, lastname=ln)	
+	address = Address(addressline1 = a1, addressline2 = a2, postcode = pc, city = ci, country = co, userid = user)
+	user.save()
+	address.save()
+
+	context = {
+		'appname': appname,
+        	'username' : u
+	}
+	return render(request, 'ecommerce/user-registered.html', context)
 
 def login(request):
     if 'username' not in request.POST:
@@ -74,8 +81,8 @@ def login(request):
         u = request.POST['username']
         p = request.POST['password']
         try:
-            member = Member.objects.get(pk=u)
-        except Member.DoesNotExist:
+            member = User.objects.get(pk=u)
+        except member.DoesNotExist:
             return HttpResponse("User does not exist")
         if p == member.password:
             request.session['username'] = u;
@@ -87,39 +94,6 @@ def login(request):
             )
         else:
             return HttpResponse("Wrong password") 
-
-@loggedin		
-def basket(request):
-    # get all stored Record objects
-    allProductsInBasket = Basket.objects.all()
-	
-    u = request.session['username']
-    return render(request, 'ecommerce/basket.html', {
-        'appname': appname,
-		'loggedin': True,
-        'allProductsInBasket' : allProductsInBasket,
-		'username' : u}
-    )
-
-
-def addbasket(request):
-
-    u = request.session['username']
-
-    productid = request.POST['stuffNum']
-    productname = request.POST['stuffName']
-    productpri = request.POST['stuffPri']
-    productdesc = request.POST['stuffDesc']
-	
-	# make new Record object to store all values and save it
-    queryObject = Basket(StuffID = productid, sName = productname, sPrice = productpri, sDescription = productdesc)
-    queryObject.save()
-	
-    return render(request, 'ecommerce/added.html', {
-        'appname': appname,
-		'loggedin': True,
-		'username' : u}
-    )
 	
 @loggedin
 def logout(request):
@@ -133,3 +107,69 @@ def logout(request):
         return render(request, 'ecommerce/logout.html', context)
     else:
         raise Http404("Can't logout, you are not logged in")
+
+@loggedin
+def basket(request):
+	u = request.session['username']
+	user = User.objects.get(username = u)
+	order = Order.objects.filter(userid = user).filter(confirmed = 0)
+	if order.exists():
+		allProductsInBasket = order.get().productid.all()
+		return render(request, 'ecommerce/basket.html', {
+			'appname': appname,
+			'loggedin': True,
+			'allProductsInBasket' : allProductsInBasket,
+			'username' : u}
+		)
+	else:
+		return render(request, 'ecommerce/basket.html', {
+			'appname': appname,
+			'loggedin': True,
+			'username' : u}
+		)
+
+def addbasket(request):
+	u = request.session['username']
+	productid = request.POST['stuffNum']
+
+	user = User.objects.get(username = u)
+	order = Order.objects.filter(userid = user).filter(confirmed = 0)
+	product = Product.objects.get(ProductID = productid)
+
+	if order.exists():
+		o = order.get()
+	else:
+		o = Order(confirmed = 0, userid = user)
+		o.save()
+	o.productid.add(product)
+
+
+	return render(request, 'ecommerce/added.html', {
+		'appname': appname,
+		'loggedin': True,
+		'username' : u}
+	)
+
+def removefrombasket(request):
+	u = request.session['username']
+	productid = request.POST['itemID']
+	user = User.objects.get(username = u)
+	order = Order.objects.filter(userid = user).filter(confirmed = 0)
+	o = order.get()
+	product = Product.objects.get(ProductID = productid)
+	o.productid.remove(product)
+
+	if order.exists():
+		allProductsInBasket = order.get().productid.all()
+		return render(request, 'ecommerce/basket.html', {
+			'appname': appname,
+			'loggedin': True,
+			'allProductsInBasket' : allProductsInBasket,
+			'username' : u}
+		)
+	else:
+		return render(request, 'ecommerce/basket.html', {
+			'appname': appname,
+			'loggedin': True,
+			'username' : u}
+		)

@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Member, Product, Basket
+from .models import Product, User, Address, Paymentmethod, Order
 
-@admin.register(Member, Product, Basket)
+@admin.register(Product, User, Address, Paymentmethod, Order)
 class PersonAdmin(admin.ModelAdmin):
     pass
