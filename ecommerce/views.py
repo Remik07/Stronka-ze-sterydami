@@ -282,7 +282,7 @@ def placeorder(request):
 	o.date = datetime.datetime.now()
 	o.save()
 	allProductsInBasket = o.productid.all()
-	return render(request, 'ecommerce/orders.html', {
+	return render(request, 'ecommerce/summary.html', {
 		'appname': appname,
 		'loggedin': True,
 		'username' : u,

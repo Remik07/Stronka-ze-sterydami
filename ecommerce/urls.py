@@ -33,6 +33,6 @@ urlpatterns = [
 	# choosepayment page
     url(r'^choosepayment/$', views.choosepayment, name='choosepayment'),
 	# placeorder page
-    url(r'^placeorder/$', views.placeorder, name='placeorder'),
+    url(r'^placeorder/$', views.placeorder, name='placeorder')
 
 ]
