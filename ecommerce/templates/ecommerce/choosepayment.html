@@ -8,6 +8,14 @@
 	<link href="{% static "ecommerce/orderstyle.css" %}" rel="stylesheet">
 {% if loggedin %}
 <div class="container">
+			<div class="col-xs-12">
+				<div class="text-right">
+					<a href="{% url 'ecommerce:addpaymentmethodform' %}" class="btn btn-default">Add New Payment Method</a>
+				</div>
+			</div>
+			</br>
+			</br>
+			</br>
         <div class="col-sm-12">
 		{% for Payment in paymentmethods %}
                 <div class="bs-calltoaction bs-calltoaction-default">
@@ -19,9 +27,9 @@
                             </div>
                         </div>
                         <div class="col-md-3 cta-button">
-							<form method='POST' action="{% url 'ecommerce:orderproducts' %}">
+							<form method='POST' action="{% url 'ecommerce:placeorder' %}">
 							{% csrf_token %}
-							<input type="hidden" name="orderid" value="{{ Order.orderid }}">
+							<input type="hidden" name="paymentid" value="{{ Payment.paymentmethodid }}">
 							<button class="btn btn-lg btn-block btn-default" type="submit">Choose this payment method</button>
 							</form>
                         </div>

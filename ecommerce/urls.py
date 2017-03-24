@@ -31,6 +31,8 @@ urlpatterns = [
 	# addpaymentmethod page
     url(r'^addpaymentmethod/$', views.addpaymentmethod, name='addpaymentmethod'),
 	# choosepayment page
-    url(r'^choosepayment/$', views.choosepayment, name='choosepayment')
+    url(r'^choosepayment/$', views.choosepayment, name='choosepayment'),
+	# placeorder page
+    url(r'^placeorder/$', views.placeorder, name='placeorder'),
 
 ]

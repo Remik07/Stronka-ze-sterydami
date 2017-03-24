@@ -3,9 +3,10 @@ from django import template
 from django.http import Http404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader, RequestContext
-
+from django.db.models import Sum
+from decimal import *
 from .models import Product, User, Address, Order, Paymentmethod
-import math
+import math, datetime
 
 # Create your views here.
 
@@ -50,7 +51,7 @@ def orders(request):# get all fulfilled orders
 	u = request.session['username']
 	user = User.objects.get(username = u)
 	allOrders =  Order.objects.filter(userid = user).filter(confirmed = 1)
-	address = Address.objects.get(userid = u)
+	address = Address.objects.filter(userid = user).first()
 	context = {
         	'appname': appname,
 		'loggedin': True,
@@ -145,18 +146,24 @@ def basket(request):
 	user = User.objects.get(username = u)
 	order = Order.objects.filter(userid = user).filter(confirmed = 0)
 	if order.exists():
-		allProductsInBasket = order.get().productid.all()
+		o = order.get()
+		allProductsInBasket = o.productid.all()
+		total = allProductsInBasket.aggregate(Sum('Price'))
+		o.total = total['Price__sum']
+		o.save()
 		return render(request, 'ecommerce/basket.html', {
 			'appname': appname,
 			'loggedin': True,
 			'allProductsInBasket' : allProductsInBasket,
-			'username' : u}
+			'username' : u,
+			'total': total}
 		)
 	else:
 		return render(request, 'ecommerce/basket.html', {
 			'appname': appname,
 			'loggedin': True,
-			'username' : u}
+			'username' : u,
+			'total': 0}
 		)
 @loggedin
 def addbasket(request):
@@ -191,18 +198,24 @@ def removefrombasket(request):
 	o.productid.remove(product)
 
 	if order.exists():
-		allProductsInBasket = order.get().productid.all()
+		o = order.get()
+		allProductsInBasket = o.productid.all()
+		total = allProductsInBasket.aggregate(Sum('Price'))
+		o.total = total['Price__sum']
+		o.save()
 		return render(request, 'ecommerce/basket.html', {
 			'appname': appname,
 			'loggedin': True,
 			'allProductsInBasket' : allProductsInBasket,
-			'username' : u}
+			'username' : u,
+			'total': total}
 		)
 	else:
 		return render(request, 'ecommerce/basket.html', {
 			'appname': appname,
 			'loggedin': True,
-			'username' : u}
+			'username' : u,
+			'total': 0}
 		)
 
 @loggedin
@@ -232,9 +245,12 @@ def addpaymentmethod(request):
 	paymentmethod = Paymentmethod(cardnumber = cn, expdate = ed + "-01", cardholdername = chn, billingaddressid = address, cvc = cvc, userid = user )
 	paymentmethod.save()
 
-	return render(request, 'ecommerce/paymentsuccessful.html', {
+	methods = Paymentmethod.objects.filter(userid = user)	
+
+	return render(request, 'ecommerce/choosepayment.html', {
 		'appname': appname,
 		'loggedin': True,
+		'paymentmethods': methods,
 		'username' : u}
 	)
 
@@ -251,3 +267,28 @@ def choosepayment(request):
 		'paymentmethods': methods,
 		'username' : u}
 	)
+
+@loggedin
+def placeorder(request):
+	u = request.session['username']
+	pid = request.POST['paymentid']
+	user = User.objects.get(username = u)
+	payment = Paymentmethod.objects.get(paymentmethodid = pid)
+	address = Address.objects.filter(userid = user).first()
+	order = Order.objects.filter(userid = user).filter(confirmed = 0)
+	o = order.get()
+	o.confirmed = 1
+	o.paymentmethodid = payment
+	o.date = datetime.datetime.now()
+	o.save()
+	allProductsInBasket = o.productid.all()
+	return render(request, 'ecommerce/orders.html', {
+		'appname': appname,
+		'loggedin': True,
+		'username' : u,
+		'order' : o,
+		'paymentmethod': payment,
+		'address': address,
+		'products': allProductsInBasket}
+	)
+

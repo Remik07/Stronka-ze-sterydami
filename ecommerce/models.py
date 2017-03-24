@@ -5,7 +5,7 @@ from django.utils.encoding import python_2_unicode_compatible
 class Product(models.Model):
     ProductID = models.AutoField(db_column='ProductId', primary_key=True)  # Field name made lowercase.
     Name = models.CharField(db_column='Name', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Price = models.TextField(db_column='Price', blank=True, null=True)  # Field name made lowercase. This field type is a guess.
+    Price = models.DecimalField(db_column='total', max_digits=7, decimal_places=2, null=True)  # Field name made lowercase. This field type is a guess.
     Description = models.TextField(db_column='Description', blank=True, null=True)  # Field name made lowercase.
     Image = models.TextField(db_column='Image', blank=True, null=True)  # Field name made lowercase.
 	
