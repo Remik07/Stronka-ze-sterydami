@@ -30,7 +30,8 @@ class Address(models.Model):
 class Paymentmethod(models.Model):
     paymentmethodid = models.AutoField(db_column='PaymentMethodId', primary_key=True)  # Field name made lowercase.
     cardnumber = models.CharField(db_column='CardNumber', max_length=255)  # Field name made lowercase.
-    expdate = models.CharField(db_column='ExpDate', max_length=255)  # Field name made lowercase.
+    expdate = models.DateField(db_column='ExpDate')  # Field name made lowercase.
+    cvc = models.CharField(db_column='CVC', max_length=255)  # Field name made lowercase.
     cardholdername = models.CharField(db_column='CardHolderName', max_length=255)  # Field name made lowercase.
     billingaddressid = models.ForeignKey(Address, db_column='BillingAddressId')  # Field name made lowercase.
     userid = models.ForeignKey(User, db_column='UserId')  # Field name made lowercase.

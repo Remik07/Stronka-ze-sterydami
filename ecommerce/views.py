@@ -204,3 +204,38 @@ def removefrombasket(request):
 			'loggedin': True,
 			'username' : u}
 		)
+
+@loggedin
+def addpaymentmethodform(request):
+    context = { 'appname': appname }
+    return render(request, 'ecommerce/addpaymentmethod.html', context)
+
+@loggedin
+def addpaymentmethod(request):
+	u = request.session['username']
+
+	cn = request.POST['cardnumber']
+	ed = request.POST['expdate']
+	chn = request.POST['cardholdername']
+	cvc = request.POST['cvc']
+
+	a1 = request.POST['address1']
+	a2 = request.POST['address2']
+	pc = request.POST['postcode']
+	fn = request.POST['firstname']
+	ln = request.POST['lastname']
+	ci = request.POST['city']
+	co = request.POST['country']
+
+	user = User.objects.get(username = u)
+
+	address = Address(addressline1 = a1, addressline2 = a2, postcode = pc, city = ci, country = co, userid = user)
+	address.save()
+	paymentmethod = Paymentmethod(cardnumber = cn, expdate = ed, cardholdername = chn, billingaddressid = address, cvc = cvc, userid = user )
+	paymentmethod.save()
+
+	return render(request, 'ecommerce/index.html', {
+		'appname': appname,
+		'loggedin': True,
+		'username' : u}
+	)
