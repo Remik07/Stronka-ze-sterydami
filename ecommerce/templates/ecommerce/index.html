@@ -12,23 +12,24 @@
     <div class="container marketing">
 
       <!-- Three columns of text below the carousel -->	  
-		<div class="row">
 		{% for Product in oldProducts %}
-        <div class="col-lg-4">
-          <img class="img-circle" src="/static/ecommerce/img/{{ Product.Image }}" alt="Generic placeholder image" width="140" height="140">
-          <h2>{{ Product.Name }}</h2>
-          <p>{{ Product.Price }} </br> {{ Product.Description }}</p>
-		  <form method='POST' action="{% url 'ecommerce:addbasket' %}">
-		  {% csrf_token %}
-		  <input type="hidden" name="stuffNum" value="{{ Product.ProductID }}">
-		  <input type="hidden" name="stuffName" value="{{ Product.Name }}">
-		  <input type="hidden" name="stuffPri" value="{{ Product.Price }}">
-		  <input type="hidden" name="stuffDesc" value="{{ Product.Description }}">
-		  <button class="btn btn-default" type="submit">Add To Basket</button>
-		  </form>
-        </div><!-- /.col-lg-4 -->
+		{% if forloop.first %}<div class="row">{% endif %}
+			<div class="col-lg-4">
+			  <img class="img-circle" src="/static/ecommerce/img/{{ Product.Image }}" alt="Generic placeholder image" width="140" height="140">
+			  <h2>{{ Product.Name }}</h2>
+			  <p>{{ Product.Price }} </br> {{ Product.Description }}</p>
+			  <form method='POST' action="{% url 'ecommerce:addbasket' %}">
+			  {% csrf_token %}
+			  <input type="hidden" name="stuffNum" value="{{ Product.ProductID }}">
+			  <input type="hidden" name="stuffName" value="{{ Product.Name }}">
+			  <input type="hidden" name="stuffPri" value="{{ Product.Price }}">
+			  <input type="hidden" name="stuffDesc" value="{{ Product.Description }}">
+			  <button class="btn btn-default" type="submit">Add To Basket</button>
+			  </form>
+			</div><!-- /.col-lg-4 -->
+		{% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
+		{% if forloop.last %}</div>{% endif %}
 		{% endfor %}
-		</div><!-- /.row -->
 
 
 
