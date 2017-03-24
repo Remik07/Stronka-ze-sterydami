@@ -46,13 +46,13 @@ def shop(request):
 
 def orders(request):
     # get all stored Record objects
-    oldProducts = Product.objects.all()
+    allOrders = Order.objects.all()
     u = request.session['username']
     context = {
         'appname': appname,
 		'loggedin': True,
 		'username' : u,
-        'oldProducts' : oldProducts
+        'allOrders' : allOrders
     }
     return render(request, 'ecommerce/orders.html', context)
 

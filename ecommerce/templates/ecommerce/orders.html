@@ -9,7 +9,7 @@
 {% if loggedin %}
 <div class="container">
         <div class="col-sm-12">
-
+		{% for Item in allOrders %}
                 <div class="bs-calltoaction bs-calltoaction-default">
                     <div class="row">
                         <div class="col-md-9 cta-contents">
@@ -25,7 +25,7 @@
                         </div>
                      </div>
                 </div>
-
+		{% endfor %}
         </div>
     </div>	
 {% else %}
