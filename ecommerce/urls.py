@@ -21,5 +21,7 @@ urlpatterns = [
 	# addbasket page
     url(r'^addbasket/$', views.addbasket, name='addbasket'),
 	# removefrombasket page
-    url(r'^removefrombasket/$', views.removefrombasket, name='removefrombasket')
+    url(r'^removefrombasket/$', views.removefrombasket, name='removefrombasket'),
+	# removefrombasket page
+    url(r'^orders/$', views.orders, name='orders')
 ]

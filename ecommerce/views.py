@@ -31,7 +31,7 @@ def index(request):
 		'counter' : counter
     }
     return render(request, 'ecommerce/index.html', context)
-
+	
 def shop(request):
     # get all stored Record objects
     oldProducts = Product.objects.all()
@@ -43,6 +43,18 @@ def shop(request):
         'oldProducts' : oldProducts
     }
     return render(request, 'ecommerce/index.html', context)
+
+def orders(request):
+    # get all stored Record objects
+    oldProducts = Product.objects.all()
+    u = request.session['username']
+    context = {
+        'appname': appname,
+		'loggedin': True,
+		'username' : u,
+        'oldProducts' : oldProducts
+    }
+    return render(request, 'ecommerce/orders.html', context)
 
 
 def signup(request):
