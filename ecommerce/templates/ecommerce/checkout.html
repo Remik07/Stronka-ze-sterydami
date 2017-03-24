@@ -1,0 +1,9 @@
+{% extends "ecommerce/base.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+<!-- Custom styles for this template -->
+    <link href="{% static "ecommerce/signin.css" %}" rel="stylesheet">
+	<meta http-equiv="refresh" content="0; URL={% url 'ecommerce:{{viewname}}' %}">
+{% endblock %}

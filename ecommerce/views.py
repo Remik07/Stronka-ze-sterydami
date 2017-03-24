@@ -1,7 +1,7 @@
-from django.shortcuts import get_object_or_404, render, redirect
+from django.shortcuts import get_object_or_404, render, redirect, reverse
 from django import template
 from django.http import Http404
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader, RequestContext
 
 from .models import Product, User, Address, Order, Paymentmethod
@@ -219,7 +219,6 @@ def addpaymentmethod(request):
 	ed = request.POST['expdate']
 	chn = request.POST['cardholdername']
 	cvc = request.POST['cvc']
-
 	a1 = request.POST['address1']
 	a2 = request.POST['address2']
 	pc = request.POST['postcode']
@@ -236,5 +235,19 @@ def addpaymentmethod(request):
 	return render(request, 'ecommerce/paymentsuccessful.html', {
 		'appname': appname,
 		'loggedin': True,
+		'username' : u}
+	)
+
+@loggedin
+def choosepayment(request):
+	u = request.session['username']
+	user = User.objects.get(username = u)
+	methods = Paymentmethod.objects.filter(userid = user)
+
+
+	return render(request, 'ecommerce/choosepayment.html', {
+		'appname': appname,
+		'loggedin': True,
+		'paymentmethods': methods,
 		'username' : u}
 	)

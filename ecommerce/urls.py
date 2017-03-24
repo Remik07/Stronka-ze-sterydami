@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from ecommerce import views
 
@@ -29,5 +29,8 @@ urlpatterns = [
 	# addpaymentmethodform page
     url(r'^addpaymentmethodform/$', views.addpaymentmethodform, name='addpaymentmethodform'),
 	# addpaymentmethod page
-    url(r'^addpaymentmethod/$', views.addpaymentmethod, name='addpaymentmethod')
+    url(r'^addpaymentmethod/$', views.addpaymentmethod, name='addpaymentmethod'),
+	# choosepayment page
+    url(r'^choosepayment/$', views.choosepayment, name='choosepayment')
+
 ]

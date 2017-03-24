@@ -1,0 +1,36 @@
+{% extends "ecommerce/base.html" %}
+
+{% load staticfiles %}
+{% block content %}
+<!-- Custom styles for this template -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{% static "ecommerce/signin.css" %}" rel="stylesheet">
+	<link href="{% static "ecommerce/orderstyle.css" %}" rel="stylesheet">
+{% if loggedin %}
+<div class="container">
+        <div class="col-sm-12">
+		{% for Payment in paymentmethods %}
+                <div class="bs-calltoaction bs-calltoaction-default">
+                    <div class="row">
+                        <div class="col-md-9 cta-contents">
+                            <h1 class="cta-title">Cardholder's name: {{ Payment.cardholdername }}</h1>
+                            <div class="cta-desc">
+                                <p>{{Payment.cardnumber}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3 cta-button">
+							<form method='POST' action="{% url 'ecommerce:orderproducts' %}">
+							{% csrf_token %}
+							<input type="hidden" name="orderid" value="{{ Order.orderid }}">
+							<button class="btn btn-lg btn-block btn-default" type="submit">Choose this payment method</button>
+							</form>
+                        </div>
+                     </div>
+                </div>
+		{% endfor %}
+        </div>
+    </div>	
+{% else %}
+Log inn dizzy youte
+{% endif %}
+{% endblock %}
