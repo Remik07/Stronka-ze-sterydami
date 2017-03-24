@@ -1,5 +1,10 @@
 {% extends "ecommerce/base.html" %}
 
+{% load staticfiles %}
+
 {% block content %}
-<span class='info'>&#8658; You must be logged in to view this page.</span><br><br>
+<!-- Custom styles for this template -->
+    <link href="{% static "ecommerce/signin.css" %}" rel="stylesheet">
+	<center>You are currently not logged in</center>
+	<center><a href="{% url 'ecommerce:login' %}">Click here to Log In</a></center>
 {% endblock %}

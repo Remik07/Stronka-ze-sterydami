@@ -7,7 +7,6 @@
     <link href="{% static "ecommerce/signin.css" %}" rel="stylesheet">
 	<link href="{% static "ecommerce/orderstyle.css" %}" rel="stylesheet">
 {% if loggedin %}
-<h2 class="text-center">Payment Successful! Your items have been ordered.</h2>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -35,7 +34,7 @@
     	<div class="col-md-12">
     		<div class="panel panel-default">
     			<div class="panel-heading">
-    				<h3 class="panel-title"><strong>Date of order: {{order.date}}</strong></h3>
+    				<h3 class="panel-title"><strong>{{order.date}}</strong></h3>
     			</div>
     			<div class="panel-body">
     				<div class="table-responsive">
@@ -52,13 +51,13 @@
     							<tr>
     								<td class="col-md-3">
     								    <div class="media">
-    								         <a class="thumbnail pull-left" href="#"> <img class="media-object" src="/static/ecommerce/img/{{Basket.Image}}" style="width: 72px; height: 72px;"> </a>
+    								         <a class="thumbnail pull-left" href="#"> <img class="media-object" src="/static/ecommerce/{{Basket.Image}}" style="width: 72px; height: 72px;"> </a>
     								         <div class="media-body">
     								             <h4 class="media-heading"> {{Basket.Name}}</h4>
     								         </div>
     								    </div>
     								</td>
-    								<td class="text-center">£{{Basket.Price}}</td>
+    								<td class="text-center">{{Basket.Price}}</td>
     							</tr>
 								{% endfor %}
                                 
@@ -74,22 +73,31 @@
          <div class="col-md-12">
             <div class="col-md-4">
             	<h3 class="text-center">Order Summary</h3><hr>
+            	<div class="pull-left"><h4>Subtotal</h4> </div>
+            	<div class="pull-right"><h4 class="text-right">$11.99</h4></div>
             	<div class="clearfix"></div>
-            	<div class="pull-left"><h4>Payment Type:</h4> </div>
-            	<div class="pull-right"><h4 class="text-right">Paid by Credit Card</h4></div>
-				</br>
-				</br>
-				<div class="pull-left"><h4>Cardholder's Name:</h4> </div>
-            	<div class="pull-right"><h4 class="text-right">{{paymentmethod.cardholdername}}</h4></div>
-				</br>
-				</br>
-				<div class="pull-left"><h4>Used card number:</h4> </div>
-            	<div class="pull-right"><h4 class="text-right">{{paymentmethod.cardnumber}}</h4></div>
-				</br>
-				</br>
-				<div class="pull-left"><h4>Order Total:</h4> </div>
-            	<div class="pull-right"><h4 class="text-right">£{{order.total}}</h4></div>
+            	<div class="pull-left"><h4>Tax</h4> </div>
+            	<div class="pull-right"><h4 class="text-right">$1.99</h4></div>
             	<div class="clearfix"></div>
+            	<div class="pull-left"><h4>Order Total</h4> </div>
+            	<div class="pull-right"><h4 class="text-right">{{order.total}}</h4></div>
+            	<div class="clearfix"></div>
+        	</div>
+        	<div class="col-md-4 offset-md-1">
+            	<h3 class="text-center">Payment Type</h3><hr>
+            	<div class="text-center">
+            	    <strong>Paid by Credit Card</strong><br>
+            	 </div>
+        	</div>
+        	<div class="col-md-4 offset-md-2">
+            	<h3 class="text-center">Other Info</h3><hr>
+            	<address>
+            	    <strong>Billed To:</strong><br>
+            	    John Smith<br>
+            	    1234 Main<br>
+            	    Apt. 4B<br>
+            	    Springfield, ST 54321
+            	 </address>
         	</div>
     	</div>
     </div>

@@ -23,14 +23,14 @@
                         <div class="col-md-9 cta-contents">
                             <h1 class="cta-title">Cardholder's name: {{ Payment.cardholdername }}</h1>
                             <div class="cta-desc">
-                                <p>{{Payment.cardnumber}}</p>
+                                <p>Card Number: {{Payment.cardnumber}}</p>
                             </div>
                         </div>
                         <div class="col-md-3 cta-button">
 							<form method='POST' action="{% url 'ecommerce:placeorder' %}">
 							{% csrf_token %}
 							<input type="hidden" name="paymentid" value="{{ Payment.paymentmethodid }}">
-							<button class="btn btn-lg btn-block btn-default" type="submit">Choose this payment method</button>
+							<button class="btn btn-lg btn-block btn-default" type="submit">Pay</button>
 							</form>
                         </div>
                      </div>

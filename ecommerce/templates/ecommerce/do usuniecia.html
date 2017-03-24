@@ -9,32 +9,28 @@
 {% if loggedin %}
 <div class="container">
         <div class="col-sm-12">
-		{% for Order in allOrders %}
                 <div class="bs-calltoaction bs-calltoaction-default">
                     <div class="row">
                         <div class="col-md-9 cta-contents">
-                            <h1 class="cta-title">Order number: {{ Order.orderid }}</h1>
+                            <h1 class="cta-title">Order Summary</h1>
                             <div class="cta-desc">
-                                <p>Date of Order: {{Order.date}}</p>
-                                <p>Total price: £{{Order.total}}</p>
-								<h3>Address</h3>
+                                <p>{{order.orderid}}</p>
+								<p>£{{order.total}}</p>
+                                <p>{{paymentmethod.cardnumber}}</p>
                                 <p>{{address.addressline1}}</p>
-		                        <p>{{address.addressline2}}</p>
+								<p>{{address.addressline2}}</p>
 								<p>{{address.city}}</p>
 								<p>{{address.country}}</p>
 								<p>{{address.postcode}}</p>
+								{% for Basket in products %}
+								<p>{{Basket.Name}}</p>
+								<p>{{Basket.Description}}</p>
+								<p>{{Basket.Price}}</p>
+								{% endfor %}
                             </div>
-                        </div>
-                        <div class="col-md-3 cta-button">
-							<form method='POST' action="{% url 'ecommerce:orderproducts' %}">
-							{% csrf_token %}
-							<input type="hidden" name="orderid" value="{{ Order.orderid }}">
-							<button class="btn btn-lg btn-block btn-default" type="submit">View products</button>
-							</form>
                         </div>
                      </div>
                 </div>
-		{% endfor %}
         </div>
     </div>	
 {% else %}

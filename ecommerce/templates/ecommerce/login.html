@@ -9,8 +9,8 @@
 <script src="{% static 'mainapp/ajax.js' %}"></script>
 <div class="all-elements">
 	{% if loggedin %}
-		You are now logged in.
-		Please <a href="{% url 'ecommerce:index' %}">click here</a> to continue shopping.
+		<p class="text-center">You are now logged in.</p>
+		<p class="text-center">Please <a href="{% url 'ecommerce:shop' %}">click here</a> to continue shopping.</p>
 		<br><br>
 	{% else %}
 		<form method='POST' action="{% url 'ecommerce:login' %}">
