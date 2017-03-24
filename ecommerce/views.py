@@ -65,12 +65,14 @@ def orderproducts(request):# get all fulfilled orders
 	u = request.session['username']
 	orderid = request.POST['orderid']
 	products =  Order.objects.get(orderid = orderid).productid.all()
+	order = order.objects.get(orderid = orderid)
 
 	context = {
         	'appname': appname,
 		'loggedin': True,
 		'username' : u,
-        	'products' : products
+        	'products' : products,
+		'order' : order
 	}
 	return render(request, 'ecommerce/orderproducts.html', context)
 
