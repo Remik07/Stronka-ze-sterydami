@@ -13,11 +13,12 @@
                 <div class="bs-calltoaction bs-calltoaction-default">
                     <div class="row">
                         <div class="col-md-9 cta-contents">
-                            <h1 class="cta-title">Product number: {{ Item.orderid }}</h1>
+                            <h1 class="cta-title">Order number: {{ Item.orderid }}</h1>
                             <div class="cta-desc">
-                                <p>Describe the action here.</p>
-                                <p>Describe the action here.</p>
-                                <p>Describe the action here.</p>
+                                <p>{{Item.date}}</p>
+                                <p>{{Item.total}}</p>
+                                <p>{{address.addressline1}}</p>
+				<p>{{address.addressline2}}</p>
                             </div>
                         </div>
                         <div class="col-md-3 cta-button">

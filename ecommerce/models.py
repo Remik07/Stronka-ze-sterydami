@@ -38,6 +38,8 @@ class Paymentmethod(models.Model):
 class Order(models.Model):
     orderid = models.AutoField(db_column='OrderId', primary_key=True)  # Field name made lowercase.
     confirmed = models.NullBooleanField(db_column='Confirmed')  # Field name made lowercase.
+    date = models.DateField(db_column='date', null=True)  # Field name made lowercase.
+    total = models.DecimalField(db_column='total', max_digits=7, decimal_places=2, null=True)  # Field name made lowercase.
     userid = models.ForeignKey(User, db_column='UserId')  # Field name made lowercase.
     paymentmethodid = models.ForeignKey(Paymentmethod, db_column='PaymentMethodId', blank=True, null=True)  # Field name made lowercase.
     productid = models.ManyToManyField(Product, db_column='ProductId')

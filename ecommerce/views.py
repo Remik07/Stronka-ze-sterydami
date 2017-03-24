@@ -31,6 +31,7 @@ def index(request):
 		'counter' : counter
     }
     return render(request, 'ecommerce/index.html', context)
+
 	
 def shop(request):
     # get all stored Record objects
@@ -44,17 +45,20 @@ def shop(request):
     }
     return render(request, 'ecommerce/index.html', context)
 
-def orders(request):
-    # get all stored Record objects
-    allOrders = Order.objects.all()
-    u = request.session['username']
-    context = {
-        'appname': appname,
+@loggedin
+def orders(request):# get all fulfilled orders
+	u = request.session['username']
+	user = User.objects.get(username = u)
+	allOrders =  Order.objects.filter(userid = user).filter(confirmed = 1)
+	address = Address.objects.get(userid = u)
+	context = {
+        	'appname': appname,
 		'loggedin': True,
 		'username' : u,
-        'allOrders' : allOrders
-    }
-    return render(request, 'ecommerce/orders.html', context)
+        	'allOrders' : allOrders,
+		'address' : address
+	}
+	return render(request, 'ecommerce/orders.html', context)
 
 
 def signup(request):
@@ -139,7 +143,7 @@ def basket(request):
 			'loggedin': True,
 			'username' : u}
 		)
-
+@loggedin
 def addbasket(request):
 	u = request.session['username']
 	productid = request.POST['stuffNum']
