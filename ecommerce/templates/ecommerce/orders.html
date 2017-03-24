@@ -25,9 +25,8 @@
 							<form method='POST' action="{% url 'ecommerce:orderproducts' %}">
 							{% csrf_token %}
 							<input type="hidden" name="stuffDesc" value="{{ Item.orderid }}">
-							<button class="btn btn-default" type="submit">Add To Basket</button>
+							<button class="btn btn-lg btn-block btn-default" type="submit">View products</button>
 							</form>
-                            <a href="#" class="btn btn-lg btn-block btn-default">Go for It!</a>
                         </div>
                      </div>
                 </div>
