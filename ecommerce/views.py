@@ -4,7 +4,7 @@ from django.http import Http404
 from django.http import HttpResponse
 from django.template import loader, RequestContext
 
-from .models import Product, User, Address, Order
+from .models import Product, User, Address, Order, Paymentmethod
 import math
 
 # Create your views here.
@@ -207,7 +207,8 @@ def removefrombasket(request):
 
 @loggedin
 def addpaymentmethodform(request):
-    context = { 'appname': appname }
+    u = request.session['username']
+    context = { 'appname': appname, 'loggedin': True, 'username': u	}
     return render(request, 'ecommerce/addpaymentmethod.html', context)
 
 @loggedin
@@ -222,8 +223,6 @@ def addpaymentmethod(request):
 	a1 = request.POST['address1']
 	a2 = request.POST['address2']
 	pc = request.POST['postcode']
-	fn = request.POST['firstname']
-	ln = request.POST['lastname']
 	ci = request.POST['city']
 	co = request.POST['country']
 
@@ -231,10 +230,10 @@ def addpaymentmethod(request):
 
 	address = Address(addressline1 = a1, addressline2 = a2, postcode = pc, city = ci, country = co, userid = user)
 	address.save()
-	paymentmethod = Paymentmethod(cardnumber = cn, expdate = ed, cardholdername = chn, billingaddressid = address, cvc = cvc, userid = user )
+	paymentmethod = Paymentmethod(cardnumber = cn, expdate = ed + "-01", cardholdername = chn, billingaddressid = address, cvc = cvc, userid = user )
 	paymentmethod.save()
 
-	return render(request, 'ecommerce/index.html', {
+	return render(request, 'ecommerce/paymentsuccessful.html', {
 		'appname': appname,
 		'loggedin': True,
 		'username' : u}

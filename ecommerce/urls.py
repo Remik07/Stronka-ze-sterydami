@@ -26,14 +26,8 @@ urlpatterns = [
     url(r'^orders/$', views.orders, name='orders'),
 	# orderproducts page
     url(r'^orderproducts/$', views.orderproducts, name='orderproducts'),
-<<<<<<< HEAD
 	# addpaymentmethodform page
     url(r'^addpaymentmethodform/$', views.addpaymentmethodform, name='addpaymentmethodform'),
 	# addpaymentmethod page
     url(r'^addpaymentmethod/$', views.addpaymentmethod, name='addpaymentmethod')
 ]
-=======
-	# orderproducts page
-    url(r'^addpaymentmethodform/$', views.addpaymentmethodform, name='addpaymentmethodform')
-]
->>>>>>> 7ee4b3bf985204395cd881356a986d9dc1e99e0a
