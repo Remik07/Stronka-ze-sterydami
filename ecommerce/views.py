@@ -60,6 +60,19 @@ def orders(request):# get all fulfilled orders
 	}
 	return render(request, 'ecommerce/orders.html', context)
 
+@loggedin
+def orderproducts(request):# get all fulfilled orders
+	u = request.session['username']
+	orderid = request.POST['orderid']
+	products =  order.get(orderid = orderid).productid.all()
+
+	context = {
+        	'appname': appname,
+		'loggedin': True,
+		'username' : u,
+        	'products' : products
+	}
+	return render(request, 'ecommerce/orderproducts.html', context)
 
 def signup(request):
     context = { 'appname': appname }
