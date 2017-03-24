@@ -16,7 +16,7 @@
 						</tr>
 					</thead>
 					<tbody>
-					{% for Basket in allProductsInBasket %}
+					{% for Basket in products %}
 						<tr>
 							<td data-th="Product">
 								<div class="row">
@@ -28,13 +28,7 @@
 								</div>
 							</td>
 							<td data-th="Price">${{ Basket.Price }}</td>
-							<td class="actions" data-th="">
-							
-							  <form method='POST' action="{% url 'ecommerce:removefrombasket' %}">
-							  {% csrf_token %}
-							  <input type="hidden" name="itemID" value="{{ Basket.ProductID }}">
-							  <button class="btn btn-danger btn-sm" type="submit"><i class="fa fa-trash-o"></i></button>
-							  </form>							
+							<td class="actions" data-th="">					
 							</td>
 						</tr>
 					{% endfor %}
@@ -44,9 +38,8 @@
 							<td class="text-center"><strong>Total 1.99</strong></td>
 						</tr>
 						<tr>
-							<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-							<td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
-							<td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+							<td><a href="{% url 'ecommerce:orders' %}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Back to Orders List</a></td>
+							<td class="hidden-xs text-center"><strong>Total ${{ order.total }}</strong></td>
 						</tr>
 					</tfoot>
 				</table>
