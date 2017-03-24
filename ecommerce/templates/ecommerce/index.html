@@ -17,7 +17,7 @@
 			<div class="col-lg-4">
 			  <img class="img-circle" src="/static/ecommerce/img/{{ Product.Image }}" alt="Generic placeholder image" width="140" height="140">
 			  <h2>{{ Product.Name }}</h2>
-			  <p>{{ Product.Price }} </br> {{ Product.Description }}</p>
+			  <p>£{{ Product.Price }} </br> {{ Product.Description }}</p>
 			  <form method='POST' action="{% url 'ecommerce:addbasket' %}">
 			  {% csrf_token %}
 			  <input type="hidden" name="stuffNum" value="{{ Product.ProductID }}">
