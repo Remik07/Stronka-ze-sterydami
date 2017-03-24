@@ -106,26 +106,26 @@ def register(request):
 	return render(request, 'ecommerce/user-registered.html', context)
 
 def login(request):
-    if 'username' not in request.POST:
-        context = { 'appname': appname }
-        return render(request, 'ecommerce/login.html', context)
-    else:
-        u = request.POST['username']
-        p = request.POST['password']
-        try:
-            member = User.objects.get(pk=u)
-        except member.DoesNotExist:
-            return HttpResponse("User does not exist")
-        if p == member.password:
-            request.session['username'] = u;
-            request.session['password'] = p;
-            return render(request, 'ecommerce/login.html', {
-                'appname': appname,
-                'username': u,
-                'loggedin': True}
-            )
-        else:
-            return HttpResponse("Wrong password") 
+	if 'username' not in request.POST:
+		context = { 'appname': appname }
+		return render(request, 'ecommerce/login.html', context)
+	else:
+		u = request.POST['username']
+		p = request.POST['password']
+		try:
+			member = User.objects.get(pk=u)
+		except:
+			return render(request, 'ecommerce/loginfailed.html')
+		if p == member.password:
+			request.session['username'] = u;
+			request.session['password'] = p;
+			return render(request, 'ecommerce/login.html', {
+				'appname': appname,
+				'username': u,
+				'loggedin': True}
+				)
+		else:
+			return render(request, 'ecommerce/loginfailed.html') 
 	
 @loggedin
 def logout(request):

@@ -42,13 +42,11 @@
 					<tfoot>
 						<tr>
 							<td><a href="{% url 'ecommerce:shop' %}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-							<td class="hidden-xs text-center"><strong>Total £{{total.Price__sum}}</strong></td>
+							<td class="hidden-xs text-center"><strong>Total £{% if total.Price__sum %}{{total.Price__sum}}{% else %}0{% endif %}</strong></td>
 							<td><a href="{% url 'ecommerce:choosepayment' %}" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 				</table>
 </div>		
-{% else %}
-Log inn dizzy youte
 {% endif %}
 {% endblock %}
