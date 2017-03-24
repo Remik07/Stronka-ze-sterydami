@@ -63,8 +63,8 @@ def orders(request):# get all fulfilled orders
 @loggedin
 def orderproducts(request):# get all fulfilled orders
 	u = request.session['username']
-	orderid = request.POST.get['orderid']
-	products =  order.get(orderid = orderid).productid.all()
+	orderid = request.POST['orderid']
+	products =  Order.objects.get(orderid = orderid).productid.all()
 
 	context = {
         	'appname': appname,

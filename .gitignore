@@ -1,2 +1,3 @@
 ecommerce/migrations/
 ecommerce/__pycache__/
+*.pyc
